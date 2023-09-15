@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!ux=8qdbgqh208sbh1&#am#l20m_45my(6_!np33!cjbhxcv&y'
+SECRET_KEY = 'django-insecure-!ux=8qdbgqh208sbh1&#am#l20m_45my(6_!np33!cjbhxcvy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'leads'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'djcrm.urls'
 
+# List of Configuration Objects
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,7 +69,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djcrm.wsgi.application'
+WSGI_APPLICATION = 'djcrm.wsgi.application' #Points to Application variable in wsgi.py
+
 
 
 # Database
@@ -121,3 +124,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'leads.User'
