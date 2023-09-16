@@ -20,6 +20,9 @@ class Lead(models.Model):
   agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
   #On Delete argument must be passed with Foreign Keys
 
+  def __str__(self) -> str:
+    return f"{self.first_name} {self.last_name}"
+
   # SOURCE_CHOICES = (
   #   ('YouTube', 'YouTube'),
   #   ('Google', 'Google'),
