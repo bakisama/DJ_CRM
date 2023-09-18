@@ -32,8 +32,14 @@ def lead_create(request):
     return render(request, "leads/lead_create.html", context)
 
 
+def lead_update(request, pk):
+    lead = Lead.objects.get(id=pk)
+    context = {"form": form, "lead": lead}
+    return render(request, "leads/lead_update.html", context)
+
+
 # def lead_update(request, pk):
-#     lead = Lead.objects.get(id=pk)
+# lead = Lead.objects.get(id=pk)
 #     form = LeadForm()
 #     if request.method == "POST":
 #         form = LeadForm(request.POST)
@@ -46,8 +52,8 @@ def lead_create(request):
 #             lead.age = age
 #             lead.save()
 #             return redirect("/leads")
-#     context = {"form": form, "lead": lead}
-#     return render(request, "leads/lead_update.html", context)
+# context = {"form": form, "lead": lead}
+# return render(request, "leads/lead_update.html", context)
 
 
 # def lead_create(request):
