@@ -1,9 +1,44 @@
-from django.contrib.auth.forms import UserCreationForm, UsernameField
-from django.contrib.auth import get_user_model
 from django import forms
-from .models import Lead
+from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, UsernameField
+from .models import Lead, Agent
 
 User = get_user_model()
+
+
+class LeadModelForm(forms.ModelForm):
+    class Meta:
+        model = Lead
+        fields = (
+            "first_name",
+            "last_name",
+            "age",
+            "agent",
+            "description",
+            "phone_number",
+            "email",
+            "profile_picture",
+        )
+
+    def clean_first_name(self):
+        data = self.cleaned_data["first_name"]
+        # if data != "Joe":
+        #     raise ValidationError("Your name is not Joe")
+        return data
+
+    def clean(self):
+        pass
+        # first_name = self.cleaned_data["first_name"]
+        # last_name = self.cleaned_data["last_name"]
+        # if first_name + last_name != "Joe Soap":
+        #     raise ValidationError("Your name is not Joe Soap")
+
+
+class LeadForm(forms.Form):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    age = forms.IntegerField(min_value=0)
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -11,15 +46,3 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ("username",)
         field_classes = {"username": UsernameField}
-
-
-class LeadModelForm(forms.ModelForm):
-    class Meta:
-        model = Lead
-        fields = ("first_name", "last_name", "age", "agent")
-
-
-class LeadForm(forms.Form):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    age = forms.IntegerField(min_value=0)

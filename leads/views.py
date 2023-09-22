@@ -1,12 +1,20 @@
+import logging
+import datetime
+from django import contrib
+from django.contrib import messages
 from django.core.mail import send_mail
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms.models import BaseModelForm
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.views import generic
 from .models import Lead, Agent
-from .forms import LeadModelForm, LeadForm, CustomUserCreationForm
+from .forms import (
+    LeadForm,
+    LeadModelForm,
+    CustomUserCreationForm,
+)
 
 # CRUD = Create Retrieve Update Delete + List
 
@@ -23,20 +31,17 @@ class LandingPageView(generic.TemplateView):
     template_name = "landing.html"
 
 
+def landing_page(request):
+    return render(request, "landing.html")
+
+
 class LeadListView(LoginRequiredMixin, generic.ListView):
     template_name = "leads/lead_list.html"
     queryset = Lead.objects.all()
     context_object_name = "leads"
 
 
-def landing_page(request):
-    return render(request, "landing.html")
-
-
-# Create your views here.
 def lead_list(request):
-    # return HttpResponse("Hello World")
-    # return render(request, "leads/home_page.html")
     leads = Lead.objects.all()
     context = {"leads": leads}
     return render(request, "leads/lead_list.html", context)
