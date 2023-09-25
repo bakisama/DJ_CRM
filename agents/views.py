@@ -1,6 +1,8 @@
 import random
 
 from django.core.mail import send_mail
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
@@ -21,6 +23,11 @@ class AgentCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_success_url(self) -> str:
         return reverse("agents:agent-list")
+
+    def form_valid(self, form):
+        agent = form.save(commit=False)
+        agent.organisation = self.request.user.userprofile
+        return super(AgentCreateView, self).form_valid(form)
 
 
 class AgentDetailView(LoginRequiredMixin, generic.DetailView):
