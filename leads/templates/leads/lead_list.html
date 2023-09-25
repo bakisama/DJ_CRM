@@ -8,12 +8,14 @@
         <h1 class="text-4xl text-gray-800">Leads</h1>
       </div>
       <div>
+        {% if request.user.is_organisor %}
         <a
           class="text-gray-600 hover:text-blue-500"
           href="{% url 'leads:lead-create' %}"
         >
           Create a Lead
         </a>
+        {% endif %}
       </div>
     </div>
     <div class="flex flex-wrap -m-4">
