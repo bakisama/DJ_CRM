@@ -28,11 +28,30 @@ class Lead(models.Model):
     last_name = models.CharField(max_length=30)
     age = models.IntegerField(default=0)
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    agent = models.ForeignKey(Agent, null=True, blank=True, on_delete=models.SET_NULL)
+    agent = models.ForeignKey(
+        "Agent", related_name="leads", null=True, blank=True, on_delete=models.SET_NULL
+    )
+    category = models.ForeignKey(
+        "Category",
+        related_name="leads",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    category = models.ForeignKey
     # On Delete argument must be passed with Foreign Keys
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=30)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    # Contacted, New, Converted, Unconverted
+
+    def __str__(self):
+        return self.name
 
 
 def post_user_created_signal(sender, instance, created, **kwargs):
